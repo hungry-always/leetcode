@@ -2,6 +2,8 @@ package topic0_100;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class Solution71 {
@@ -28,15 +30,16 @@ public class Solution71 {
             }
         }
         StringBuffer sb = new StringBuffer();
-        while (!stack.isEmpty()) {
-            String pop = stack.pop();
-            sb.append("/"+pop);
+        List<String> strings = new ArrayList<>(stack);
+        int size = strings.size();
+        for (int i = 0; i < size; i++) {
+            sb.append("/" + strings.get(i));
         }
-        return sb.toString();
+        return (size == 0) ? "/" : sb.toString();
     }
 
     @Test
     public void test() {
-        System.out.println(simplifyPath("/home//foo/"));
+        System.out.println(simplifyPath("/a//b////c/d//././/.."));
     }
 }
