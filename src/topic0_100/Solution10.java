@@ -5,34 +5,17 @@
 // */
 //class Solution10 {
 //    public boolean isMatch(String s, String p) {
-//        int length1 = s.length();
-//        int length2 = p.length();
-//        boolean[][] dp = new boolean[length1 + 1][length2 + 1];
-//        dp[0][0] = true;
-//        for (int i = 0; i <= length1; ++i) {
-//            for (int j = 1; j <= length2; ++j) {
-//                if (p.charAt(j - 1) == '*') {
-//                    dp[i][j] = dp[i][j - 2];
-//                    if (matches(s, p, i, j - 1)) {
-//                        dp[i][j] = dp[i][j] || dp[i - 1][j];
-//                    }
-//                } else {
-//                    if (matches(s, p, i, j)) {
-//                        dp[i][j] = dp[i - 1][j - 1];
-//                    }
+//        int sLength = s.length();
+//        int pLength = p.length();
+//        boolean[][] f = new boolean[sLength][pLength];
+//        f[0][0] = true;
+//        for (int i = 0; i < pLength; i++) {
+//            char c = s.charAt(i);
+//            for (int j = i; j < pLength; j++) {
+//                if (c == p.charAt(j)) {
+//                    f[i][j]=
 //                }
 //            }
 //        }
-//        return dp[length1][length2];
-//    }
-//
-//    public boolean matches(String s, String p, int i, int j) {
-//        if (i == 0) {
-//            return false;
-//        }
-//        if (p.charAt(j - 1) == '.') {
-//            return true;
-//        }
-//        return s.charAt(i - 1) == p.charAt(j - 1);
 //    }
 //}
