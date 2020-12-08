@@ -6,19 +6,17 @@ public class Solution168 {
     public String convertToTitle(int n) {
         StringBuffer sb = new StringBuffer();
         while (n != 0) {
-            int remainder = n % 26;
-            n /= 26;
-            if (remainder == 0) {
-                sb.append("Z");
-            } else {
-                sb.append((char) (remainder + 64));
-            }
+            int i = (n - 1) % 26;
+            n =(n-1)/26;
+            char c = (char) (65 + i);
+            sb.append(c);
         }
-        return sb.reverse().toString();
+        sb.reverse();
+        return sb.toString();
     }
 
     @Test
     public void test() {
-        System.out.println(convertToTitle(701));
+        System.out.println(convertToTitle(28));
     }
 }
