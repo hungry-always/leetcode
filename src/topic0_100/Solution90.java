@@ -21,7 +21,7 @@ public class Solution90 {
                 subList.add(key);
                 for (int j = 0; j < size; j++) {
                     List list = new ArrayList(lists.get(j));
-                    list.add(subList);
+                    list.addAll(subList);
                     lists.add(list);
                 }
             }
