@@ -15,8 +15,15 @@ public class ListNodeUtil {
         return listNode;
     }
 
-    public static void main(String[] args) {
-        int[] ints = new int[]{1, 2, 3, 4};
-        generate(ints);
+    public static void sout(ListNode listNode) {
+        while (listNode != null) {
+            System.out.println(listNode.val + "---");
+            listNode = listNode.next;
+        }
     }
+//
+//    public static void main(String[] args) {
+//        int[] ints = new int[]{1, 2, 3, 4};
+//        generate(ints);
+//    }
 }
