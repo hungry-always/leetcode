@@ -6,7 +6,22 @@ public class Solution165 {
     public int compareVersion(String version1, String version2) {
         version1 = deleteZero(version1);
         version2 = deleteZero(version2);
-        return 1;
+        String[] split1 = version1.split("\\.");
+        String[] split2 = version2.split("\\.");
+        for (int i = 0; i < Math.min(split1.length, split2.length); i++) {
+            if (Integer.valueOf(split1[i]) > Integer.valueOf(split2[i])) {
+                return 1;
+            } else if (Integer.valueOf(split2[i]) > Integer.valueOf(split1[i])) {
+                return -1;
+            }
+        }
+        if (split1.length == split2.length) {
+            return 0;
+        } else if (split1.length > split2.length) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     private String deleteZero(String s) {
@@ -25,15 +40,17 @@ public class Solution165 {
                 sb.append(".");
             }
         }
-        while (sb.length() >= 2 && sb.charAt(sb.length()) == '0' && sb.charAt(sb.length() - 1) == '.') {
-            sb.delete(sb.length() - 2, sb.length() - 1);
+        while (sb.length() >= 2 && sb.charAt(sb.length()-1) == '0' && sb.charAt(sb.length() - 2) == '.') {
+            sb.delete(sb.length() - 2, sb.length());
         }
         return sb.toString();
     }
 
     @Test
     public void test() {
-        String s = "1.000.000.000";
-        System.out.println(deleteZero(s));
+        String version1 = "1.0.1";
+        String version2 = "1";
+        int i = compareVersion(version1, version2);
+        System.out.println(i);
     }
 }
