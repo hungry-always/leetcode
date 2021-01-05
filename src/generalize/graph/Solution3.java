@@ -1,4 +1,4 @@
-package generalize.Graph;
+package generalize.graph;
 
 import org.junit.jupiter.api.Test;
 
