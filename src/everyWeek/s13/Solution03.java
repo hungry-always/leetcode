@@ -2,68 +2,39 @@ package everyWeek.s13;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.Arrays;
 
+/**
+ * 执行乘法运算的最大分数
+ */
 public class Solution03 {
-    HashMap<Sign, Integer> map = new HashMap<>();
-
     public int maximumScore(int[] nums, int[] multipliers) {
-        int start1 = 0, end1 = nums.length - 1;
-        return maximumScore(nums, multipliers, start1, end1, 0);
-    }
-
-    private int maximumScore(int[] nums, int[] multipliers, int start1, int end1, int m) {
-        Sign sign = new Sign(start1, end1, m);
-        if (map.get(sign) != null) {
-            return map.get(sign);
+        int m = multipliers.length;
+        int n = nums.length;
+        // 前面定义为列，后面定义为行
+        int[][] dp = new int[m + 1][m + 1];
+        for (int[] ints : dp) {
+            Arrays.fill(ints,Integer.MIN_VALUE);
         }
-        if (m >= multipliers.length) {
-            return 0;
+        dp[0][0] = 0;
+        for (int k = 1; k <= m; k++) {
+            for (int i = 0; i < k; i++) {
+                int j = k - i - 1;
+                dp[i][j + 1] = Math.max(dp[i][j + 1], dp[i][j] + multipliers[i + j] * nums[n - 1 - j]);
+                dp[i + 1][j] = Math.max(dp[i][j] + multipliers[i + j] * nums[i], dp[i + 1][j]);
+            }
         }
-        int mu = multipliers[m];
-        int i1 = maximumScore(nums, multipliers, start1 + 1, end1, m + 1);
-        int i = i1 + nums[start1] * mu;
-        int i2 = maximumScore(nums, multipliers, start1, end1 - 1, m + 1);
-        int j = i2 + nums[end1] * mu;
-        int max = Math.max(i, j);
-        map.put(sign, max);
+        int max = 0;
+        for (int i = 0; i <= m; i++) {
+            max = Math.max(dp[i][m - i], max);
+        }
         return max;
-    }
-
-    class Sign {
-        int start;
-        int end;
-        int m;
-
-        public Sign(int start, int end, int m) {
-            this.start = start;
-            this.end = end;
-            this.m = m;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof Sign)) {
-                return false;
-            }
-            Sign sign = (Sign) o;
-            return start == sign.start && end == sign.end && m == sign.m;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(start, end, m);
-        }
     }
 
     @Test
     public void test() {
-        int[] nums1 = {-5, -3, -3, -2, 7, 1};
-        int[] multipliers1 = {-10, -5, 3, 4, 6};
+        int[] nums1 = {555, -434, -947, 968, -250};
+        int[] multipliers1 = {783, 911, 286, -74, -899};
         int i = maximumScore(nums1, multipliers1);
         System.out.println(i);
     }
