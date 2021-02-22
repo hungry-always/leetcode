@@ -27,5 +27,6 @@ public class Solution516 {
     public void test() {
         int bbbab = longestPalindromeSubseq("bcabd");
         System.out.println(bbbab);
+
     }
 }
