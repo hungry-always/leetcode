@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * 424题双指针使用
  */
-public class Solution2_2 {
+public class Solution2_02 {
 
     @Test
     public void test() {
