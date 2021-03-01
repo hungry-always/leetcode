@@ -1,4 +1,4 @@
-package everyDay;
+package everyDay.date_2021.Feb;
 
 import commmon.ArraysUtils;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 /**
  * 832 翻转图像
  */
-public class Solution02_24 {
+public class Solution2_24 {
     public int[][] flipAndInvertImage(int[][] A) {
         for (int[] nums : A) {
             for (int i = 0; i < nums.length / 2; i++) {

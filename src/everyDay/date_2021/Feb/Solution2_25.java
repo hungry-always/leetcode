@@ -1,4 +1,4 @@
-package everyDay;
+package everyDay.date_2021.Feb;
 
 public class Solution2_25 {
     public int[][] transpose(int[][] matrix) {

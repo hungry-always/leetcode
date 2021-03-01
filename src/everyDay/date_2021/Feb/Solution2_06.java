@@ -1,6 +1,6 @@
-package everyDay;
+package everyDay.date_2021.Feb;
 
-public class Solution2_05 {
+public class Solution2_06 {
     public int equalSubstring(String s, String t, int maxCost) {
         int length = s.length();
         int[] nums = new int[length];

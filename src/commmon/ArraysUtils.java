@@ -19,8 +19,10 @@ public class ArraysUtils {
                 .map(o -> Arrays.stream(((JSONArray) o).toArray(Integer[]::new)).mapToInt(Integer::valueOf).toArray())
                 .toArray(int[][]::new);
     }
-    public static void main(String[] args) {
-        String s = "[[1],[1]]";
-        System.out.println(generateTwo(s));
+
+    public static void swap(int[] nums, int i1, int i2) {
+        int temp = nums[i1];
+        nums[i1] = nums[i2];
+        nums[i2] = temp;
     }
 }

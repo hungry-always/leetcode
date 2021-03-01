@@ -1,4 +1,4 @@
-package everyDay;
+package everyDay.date_2021.Feb;
 
 /**
  * 子数组最大平均数I
