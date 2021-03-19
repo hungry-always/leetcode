@@ -1,5 +1,6 @@
 package commmon;
 
+import cn.hutool.core.text.StrBuilder;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 
@@ -24,5 +25,18 @@ public class ArraysUtils {
         int temp = nums[i1];
         nums[i1] = nums[i2];
         nums[i2] = temp;
+    }
+
+    public static void outArray(int[] ints) {
+        StrBuilder sb = new StrBuilder();
+        sb.append("[");
+        for (int i = 0; i < ints.length; i++) {
+            sb.append(ints[i]);
+            if (i != ints.length - 1) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        System.out.println(sb.toString());
     }
 }
