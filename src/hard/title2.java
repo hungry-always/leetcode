@@ -1,60 +1,109 @@
 package hard;
 
-import commmon.TreeNode;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-public class title2 {
-    int index = 0;
-    String nullStr = "null";
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        List<String> list = new ArrayList<>();
-        addList(root, list);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            sb.append(list.get(i));
-            if (i != list.size() - 1) {
-                sb.append("-");
-            }
+class title2 {
+    public int reversePairs(int[] nums) {
+        Set<Long> allNumbers = new TreeSet<Long>();
+        for (int x : nums) {
+            allNumbers.add((long) x);
+            allNumbers.add((long) x * 2);
         }
-        return sb.toString();
+        // 利用哈希表进行离散化
+        Map<Long, Integer> values = new HashMap<Long, Integer>();
+        int idx = 0;
+        for (long x : allNumbers) {
+            values.put(x, idx);
+            idx++;
+        }
+
+        int ret = 0;
+        BIT bit = new BIT(values.size());
+        for (int i = 0; i < nums.length; i++) {
+            int left = values.get((long) nums[i] * 2), right = values.size() - 1;
+            ret += bit.query(right + 1) - bit.query(left + 1);
+            bit.update(values.get((long) nums[i]) + 1, 1);
+        }
+        return ret;
     }
 
-    private void addList(TreeNode root, List<String> list) {
-        if (root == null) {
-            list.add(nullStr);
-        } else {
-            list.add(root.val)
+    @Test
+    public void test() {
+        int i = reversePairs(new int[]{1, 3, 2, 3, 1});
+        NumArray numArray = new NumArray(new int[]{3, 4, 1});
+        System.out.println(numArray);
+    }
+}
+
+class BIT {
+    int[] tree;
+    int n;
+
+    public BIT(int n) {
+        this.n = n;
+        this.tree = new int[n + 1];
+    }
+
+    public static int lowbit(int x) {
+        return x & (-x);
+    }
+
+    public void update(int x, int d) {
+        while (x <= n) {
+            tree[x] += d;
+            x += lowbit(x);
         }
     }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        List<String> list = Arrays.stream(data.split("-")).collect(Collectors.toList());
-        if (list.isEmpty() || list.get(0).equals(nullStr)) {
-            return null;
-        } else {
-            TreeNode listNode = new TreeNode(Integer.parseInt(list.get(0)));
-            int index = 1;
-            fillList(listNode.left, list);
-            return listNode;
+    public int query(int x) {
+        int ans = 0;
+        while (x != 0) {
+            ans += tree[x];
+            x -= lowbit(x);
+        }
+        return ans;
+    }
+}
+class NumArray {
+    int[] tree;
+    int lowbit(int x) {
+        return x & -x;
+    }
+    int query(int x) {
+        int ans = 0;
+        for (int i = x; i > 0; i -= lowbit(i)) {
+            ans += tree[i];
+        }
+        return ans;
+    }
+    void add(int x, int u) {
+        for (int i = x; i <= n; i += lowbit(i)) {
+            tree[i] += u;
         }
     }
 
-    private void fillList(TreeNode treeNode, List<String> list) {
-        if (index < list.size()) {
-            String s1 = list.get(index++);
-            treeNode.left = new TreeNode(Integer.parseInt(s1));
-            fillList(treeNode.left, list);
+    int[] nums;
+    int n;
+    public NumArray(int[] _nums) {
+        nums = _nums;
+        n = nums.length;
+        tree = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            add(i + 1, nums[i]);
         }
-        if (index < list.size()) {
-            String s2 = list.get(index++);
-            treeNode.right = new TreeNode(Integer.parseInt(s2));
-            fillList(treeNode.right, list);
-        }
+    }
+
+    public void update(int i, int val) {
+        add(i + 1, val - nums[i]);
+        nums[i] = val;
+    }
+
+    public int sumRange(int l, int r) {
+        return query(r + 1) - query(l);
     }
 }
