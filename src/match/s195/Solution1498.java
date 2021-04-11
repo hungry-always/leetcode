@@ -1,38 +1,36 @@
 package match.s195;
 
-import java.util.*;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 public class Solution1498 {
-    public int findMaxValueOfEquation(int[][] points, int k) {
-        Map<Integer, Integer> map = new HashMap<>();
-        int max = Integer.MIN_VALUE;
-        Deque<Integer> deque = new LinkedList<>();
-        for (int i = 0; i < points.length; i++) {
-            int[] point = points[i];
-            while (!deque.isEmpty() && point[0] - points[deque.getFirst()][0] > k) {
-                deque.removeFirst();
-            }
-            if (!deque.isEmpty()) {
-                int[] point1 = points[deque.getFirst()];
-                max = Math.max(max, point[0] + point[1] + point1[0] - point1[1]);
-            }
-            while (!deque.isEmpty()) {
-                int[] point1 = points[deque.getLast()];
-                if (point1[1]-point[])
+    final long mod = (long) (10e8 + 7);
+    public int numSubseq(int[] nums, int target) {
+        Arrays.sort(nums);
+        int left = 0;
+        int n = nums.length;
+        int right = n - 1;
+        long count = 0;
+        long[] pow = new long[n];
+        pow[0] = 1;
+        for (int i = 1; i < n; i++) {
+            pow[i] = (pow[i - 1] * 2) % mod;
+        }
+        while (left <= right) {
+            if (nums[left] + nums[right] <= target) {
+                count += pow[right - left];
+                count %= mod;
+                left++;
+            } else {
+                right--;
             }
         }
-        return max;
+        return (int) count;
     }
 
-    private int getQueueNum(Map<Integer, Integer> map, PriorityQueue<Integer> queue) {
-        while (true) {
-            Integer peek = queue.peek();
-            if (map.get(peek) != null && map.get(peek) >= 1) {
-                queue.poll();
-                map.put(peek, map.get(peek) - 1);
-            } else {
-                return peek;
-            }
-        }
+    @Test
+    public void test() {
+        System.out.println(mod);
     }
 }
