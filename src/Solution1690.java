@@ -22,6 +22,7 @@ public class Solution1690 {
                 }
             }
         }
+
         return 0;
     }
 
